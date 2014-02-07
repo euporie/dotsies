@@ -26,7 +26,7 @@ char charMap[28] = {
   'x',
   'y',
   'z'
-}
+};
 int flag = 0;
 int read = 0;
 int state = 0;
@@ -55,7 +55,7 @@ void loop()
 
     state = state | read;
 
-  } while (read != 0)
+  } while (read != 0);
 
   if (state != 0) {
     Keyboard.write(charMap[state-1]);
