@@ -4,7 +4,7 @@ char charMap[28] = {
   'd',
   'i',
   'c',
-  'l',
+  ' ',
   'h',
   'v',
   'b',
@@ -22,7 +22,7 @@ char charMap[28] = {
   'j',
   'x',
   'r',
-  '2',
+  ' ',
   'f',
   'w',
   'q',
@@ -51,7 +51,9 @@ void loop()
         delay(10);
         read++;
       }
-      read = (read << 1);
+      if (i<4) {
+        read = (read << 1);
+      }
     }
 
     state = state | read;
@@ -59,7 +61,7 @@ void loop()
   } while (read != 0);
 
   if (state != 0) {
-    Keyboard.write(charMap[state]);
+    Keyboard.write(charMap[state-1]);
     state = 0;
     delay(800);
   }
