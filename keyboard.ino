@@ -1,58 +1,68 @@
-int buttonPin9 = 9;  // Set a button to any pin
-int buttonPin8 = 8;  // Set a button to any pin
-int buttonPin7 = 7;  // Set a button to any pin
-int buttonPin6 = 6;  // Set a button to any pin
-int buttonPin5 = 5;  // Set a button to any pin
+int buttonPins[5] = {5,6,7,8,9};  // Set a button to any pin
+char charMap[28] = {
+  'e',
+  'd',
+  'i',
+  'c',
+  'l',
+  'h',
+  'v',
+  'b',
+  'n',
+  'k',
+  'u',
+  'g',
+  't',
+  's',
+  ' ',
+  'a',
+  'o',
+  'm',
+  'y',
+  'j',
+  'x',
+  'r',
+  ' ',
+  'f',
+  'w',
+  'q',
+  'z',
+  'p'
+};
+int read = 0;
+int state = 0;
+
 void setup()
 {
-  pinMode(buttonPin9, INPUT);  // Set the button as an input
-  digitalWrite(buttonPin9, HIGH);  // Pull the button high
-  
-  pinMode(buttonPin8, INPUT);  // Set the button as an input
-  digitalWrite(buttonPin8, HIGH);  // Pull the button high
-  
-   pinMode(buttonPin7, INPUT);  // Set the button as an input
-  digitalWrite(buttonPin7, HIGH);  // Pull the button high
-  
-    pinMode(buttonPin6, INPUT);  // Set the button as an input
-  digitalWrite(buttonPin6, HIGH);  // Pull the button high
-  
-   pinMode(buttonPin5, INPUT);  // Set the button as an input
-  digitalWrite(buttonPin5, HIGH);  // Pull the button high
+  int i;
+  for (i = 0; i < 5; i++) {
+    pinMode(buttonPins[i], INPUT);  // Set the button as an input
+    digitalWrite(buttonPins[i], HIGH);  // Pull the button high
+  }
 }
 
 void loop()
 {
-  if (digitalRead(buttonPin9) == 0)  // if the button goes low
-  {
-    Keyboard.write('9');  // send a 'z' to the computer via Keyboard HID
-    delay(1000);  // delay so there aren't a kajillion z's
-  }
-  
-  if (digitalRead(buttonPin8) == 0)  // if the button goes low
-  {
-    Keyboard.write('8');  // send a 'z' to the computer via Keyboard HID
-    delay(1000);  // delay so there aren't a kajillion z's
-  }
-  
-  
-   if (digitalRead(buttonPin7) == 0)  // if the button goes low
-  {
-    Keyboard.write('7');  // send a 'z' to the computer via Keyboard HID
-    delay(1000);  // delay so there aren't a kajillion z's
-  }
-  
-  
-   if (digitalRead(buttonPin6) == 0)  // if the button goes low
-  {
-    Keyboard.write('6');  // send a 'z' to the computer via Keyboard HID
-    delay(1000);  // delay so there aren't a kajillion z's
-  }
-  
-  
-   if (digitalRead(buttonPin5) == 0)  // if the button goes low
-  {
-    Keyboard.write('5');  // send a 'z' to the computer via Keyboard HID
-    delay(1000);  // delay so there aren't a kajillion z's
+  int i;
+  do {
+    read = 0;
+    for (i = 0; i < 5; i++) {
+      if (digitalRead(buttonPins[i]) == 0) { // if the button goes low
+        delay(10);
+        read++;
+      }
+      if (i<4) {
+        read = (read << 1);
+      }
+    }
+
+    state = state | read;
+
+  } while (read != 0);
+
+  if (state != 0) {
+    Keyboard.write(charMap[state-1]);
+    state = 0;
+    delay(800);
   }
 }
