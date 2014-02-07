@@ -1,32 +1,33 @@
 int buttonPins[5] = {5,6,7,8,9};  // Set a button to any pin
-char charMap[27] = {
-  'a',
-  'b',
-  'd',
-  'h',
-  'p',
-  'c',
-  'f',
-  'l',
-  'x',
+char charMap[28] = {
   'e',
-  'j',
-  't',
+  'd',
   'i',
-  'r',
-  'q',
-  'g',
-  'k',
-  'm',
+  'c',
+  'l',
+  'h',
+  'v',
+  'b',
   'n',
-  'v',
-  'z',
-  'v',
-  'w',
-  's',
+  'k',
   'u',
-  'y',
+  'g',
+  't',
+  's',
+  '',
+  'a',
   'o',
+  'm',
+  'y',
+  'j',
+  'x',
+  'r',
+  '',
+  'f',
+  'w',
+  'q',
+  'z',
+  'p'
 };
 int read = 0;
 int state = 0;
@@ -45,12 +46,12 @@ void loop()
   int i;
   do {
     read = 0;
-    for (i = 4; i >= 0; i--) {
-      read = (read << 1);
+    for (i = 0; i < 5; i++) {
       if (digitalRead(buttonPins[i]) == 0) { // if the button goes low
         delay(10);
         read++;
       }
+      read = (read << 1);
     }
 
     state = state | read;
