@@ -27,7 +27,6 @@ char charMap[28] = {
   'y',
   'z'
 };
-int flag = 0;
 int read = 0;
 int state = 0;
 
@@ -48,7 +47,7 @@ void loop()
     for (i = 0; i < 5; i++) {
       read = (read << 1);
       if (digitalRead(buttonPins[i]) == 0) { // if the button goes low
-        flag = 1;
+        delay(10);
         read++;
       }
     }
